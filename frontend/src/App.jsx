@@ -1,13 +1,14 @@
 import React from 'react'
-
-function App() {
+import {BrowserRouter,Routes,Route} from "react-router-dom"
+import {LoginPage,SignupPage} from './Routes.js'
+import './App.css'
+export default function App() {
   return (
-    <div>
-      <h1 className="p-72 text-3xl text-amber-500 font-bold underline">
-        Hello world!
-      </h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/login' element={<LoginPage/>}/>
+        <Route path='/sign-up' element={<SignupPage/>}/>
+      </Routes>
+    </BrowserRouter>
   )
 }
-
-export default App
