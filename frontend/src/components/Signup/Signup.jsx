@@ -4,6 +4,8 @@ import styles from "../../styles/styles";
 import { Link } from "react-router-dom";
 import { RxAvatar } from "react-icons/rx";
 import React from "react";
+import axios from "axios";
+import { server } from "../../server";
 
 const Singup = () => {
   const [email, setEmail] = useState("");
@@ -18,7 +20,22 @@ const Singup = () => {
   };
 
   const handleSubmit = async (e) => {
-    
+    e.preventDefault();
+    const config = {headers:{"Content-Type": "multipart/form-data"}};
+      const newForm = new FormData();
+      newForm.append("file",avatar);
+      newForm.append("name",name);
+      newForm.append("email",email);
+      newForm.append("password",password);
+
+
+      axios.post(`${server}/user/create-user`, newForm, config).then((res)=>{
+        console.log(res);
+        
+      }).catch((err)=>{
+        console.log(err);
+        
+      })
   };
 
   return (
