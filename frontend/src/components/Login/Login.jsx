@@ -4,7 +4,8 @@ import styles from "../../styles/styles";
 import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { toast } from "react-toastify";
-
+import axios from "axios";
+import { server } from "../../server";
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");

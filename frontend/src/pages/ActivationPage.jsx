@@ -9,6 +9,7 @@ const ActivationPage = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    console.log("Ac: ", activation_token);
     if (activation_token) {
       const sendRequest = async () => {
         await axios
