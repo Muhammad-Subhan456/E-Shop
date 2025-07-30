@@ -1,4 +1,5 @@
 // navigation Data
+import React from "react";
 export const navItems = [
     {
       title: "Home",
