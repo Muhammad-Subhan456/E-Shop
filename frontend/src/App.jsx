@@ -9,8 +9,15 @@ import axios from 'axios';
 import { server } from './server.js';
 import Store from './redux/store'
 import {loaduser} from './redux/actions/user'
+import { useSelector } from 'react-redux';
+
+
 
 export default function App() {
+
+  const {loading} = useSelector((state)=>state.user)
+
+
   useEffect(() => {
     Store.dispatch(loaduser())
   }, [])
