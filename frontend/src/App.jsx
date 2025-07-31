@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 
 export default function App() {
 
-  const {loading} = useSelector((state)=>state.user)
+  const {loading} = useSelector((state)=>state.user) 
 
 
   useEffect(() => {
