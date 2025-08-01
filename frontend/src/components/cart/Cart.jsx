@@ -15,6 +15,7 @@ const Cart = ({ setOpenCart }) => {
   const removeFromCartHandler = (data) => {
     dispatch(removeFromCart(data));
   };
+  
 
   // const totalPrice = cart.reduce(
   //   (acc, item) => acc + item.qty * item.discountPrice,

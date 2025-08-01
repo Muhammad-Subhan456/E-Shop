@@ -12,6 +12,7 @@ const user = require("../model/user");
 const sendToken = require("../utils/jwtToken");
 const { isAuthenticated } = require("../middleware/auth");
 
+
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
   const { name, email, password } = req.body;
   const userEmail = await User.findOne({ email });
