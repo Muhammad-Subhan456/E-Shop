@@ -10,6 +10,8 @@ import ProductDetailsPage from "../src/pages/ProductDetailsPage"
 import CheckoutPage from "../src/pages/CheckoutPage"
 import PaymentPage from "../src/pages/PaymentPage"
 import OrderSuccessPage from "../src/pages/OrderSuccessPage"
+import ProfilePage from "../src/pages/ProfilePage"
+
 export{
     LoginPage,
     SignupPage,
@@ -23,4 +25,5 @@ export{
     CheckoutPage,
     PaymentPage,
     OrderSuccessPage,
+    ProfilePage,
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 import {LoginPage,SignupPage,ActivationPage,HomePage,ProductsPage,BestSellingPage,EventsPage,FAQPage,ProductDetailsPage,
-  CheckoutPage,PaymentPage,OrderSuccessPage
+  CheckoutPage,PaymentPage,OrderSuccessPage,ProfilePage
 } from './Routes.js'
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -40,6 +40,7 @@ export default function App() {
         <Route path='/checkout' element={<CheckoutPage/>} />
         <Route path='/payment' element={<PaymentPage/>} />
         <Route path='/order/success/:id' element={<OrderSuccessPage/>} />
+        <Route path='/profile' element={<ProfilePage/>} />
       </Routes>
       <ToastContainer
         position="bottom-center"
