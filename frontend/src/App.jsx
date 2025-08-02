@@ -1,7 +1,7 @@
 import React from 'react'
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 import {LoginPage,SignupPage,ActivationPage,HomePage,ProductsPage,BestSellingPage,EventsPage,FAQPage,ProductDetailsPage,
-  CheckoutPage,PaymentPage,OrderSuccessPage,ProfilePage
+  CheckoutPage,PaymentPage,OrderSuccessPage,ProfilePage,ShopCreatePage,
 } from './Routes.js'
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,7 +12,7 @@ import { server } from './server.js';
 import Store from './redux/store'
 import {loaduser} from './redux/actions/user'
 import { useSelector } from 'react-redux';
-import ProtectedRoute from './ProtectedRoute.js';
+import ProtectedRoute from './ProtectedRoute';
 
 export default function App() {
 
@@ -37,7 +37,11 @@ export default function App() {
         <Route path='/best-selling' element={<BestSellingPage/>} />
         <Route path='/events' element={<EventsPage/>} />
         <Route path='/faq' element={<FAQPage/>} />
-        <Route path='/checkout' element={<CheckoutPage/>} />
+        <Route path='/checkout' element={
+          <ProtectedRoute isAuthenticated={isAuthenticated} >
+            <CheckoutPage/>
+          </ProtectedRoute>
+        } />
         <Route path='/payment' element={<PaymentPage/>} />
         <Route path='/order/success/:id' element={<OrderSuccessPage/>} />
         <Route path='/profile' element={
@@ -45,7 +49,9 @@ export default function App() {
             <ProfilePage/>
           </ProtectedRoute>
         } />
+        <Route path='/shop-create' element={ <ShopCreatePage/>} />
       </Routes>
+      
       <ToastContainer
         position="bottom-center"
         autoClose={5000}

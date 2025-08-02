@@ -11,7 +11,7 @@ import CheckoutPage from "../src/pages/CheckoutPage"
 import PaymentPage from "../src/pages/PaymentPage"
 import OrderSuccessPage from "../src/pages/OrderSuccessPage"
 import ProfilePage from "../src/pages/ProfilePage"
-
+import ShopCreatePage from "./pages/ShopCreatePage"
 export{
     LoginPage,
     SignupPage,
@@ -26,4 +26,5 @@ export{
     PaymentPage,
     OrderSuccessPage,
     ProfilePage,
+    ShopCreatePage,
 }
