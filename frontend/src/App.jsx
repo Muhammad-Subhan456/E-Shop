@@ -12,11 +12,11 @@ import { server } from './server.js';
 import Store from './redux/store'
 import {loaduser} from './redux/actions/user'
 import { useSelector } from 'react-redux';
-
+import ProtectedRoute from './ProtectedRoute.js';
 
 export default function App() {
 
-  const {loading} = useSelector((state)=>state.user) 
+  const {loading, isAuthenticated} = useSelector((state)=>state.user) 
 
 
   useEffect(() => {
@@ -40,7 +40,11 @@ export default function App() {
         <Route path='/checkout' element={<CheckoutPage/>} />
         <Route path='/payment' element={<PaymentPage/>} />
         <Route path='/order/success/:id' element={<OrderSuccessPage/>} />
-        <Route path='/profile' element={<ProfilePage/>} />
+        <Route path='/profile' element={
+          <ProtectedRoute isAuthenticated={isAuthenticated} >
+            <ProfilePage/>
+          </ProtectedRoute>
+        } />
       </Routes>
       <ToastContainer
         position="bottom-center"
