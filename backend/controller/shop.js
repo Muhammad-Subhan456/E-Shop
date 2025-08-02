@@ -11,23 +11,33 @@ const Shop = require("../model/shop");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ErrorHandler = require("../utils/ErrorHandler");
 
+
 router.post("/create-shop", upload.single("file"), async (req, res, next) => {
   try {
     const { email } = req.body;
-    const sellerEmail = Shop.findOne({ email });
-    if (sellerEmail) {
-      const filename = req.file.filename;
-      const filePath = `uploads/${filename}`;
-      fs.unlink(filePath, (err) => {
-        if (err) {
-          console.log(err);
-          res.status(500).json({
-            message: "Error Deleting File",
-          });
-        }
-      });
-      return next(ErrorHandler("User already exists", 400));
+    const existingSeller = await Shop.findOne({ email });
+
+    if (existingSeller) {
+      if (req.file) {
+        const filename = req.file.filename;
+        const filePath = `uploads/${filename}`;
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).json({
+              message: "Error Deleting File",
+            });
+          }
+        });
+      }
+
+      return next(new ErrorHandler("User already exists", 400));
     }
+
+    if (!req.file) {
+      return next(new ErrorHandler("File not uploaded", 400));
+    }
+
     const filename = req.file.filename;
     const fileUrl = path.join(filename);
 
@@ -40,6 +50,7 @@ router.post("/create-shop", upload.single("file"), async (req, res, next) => {
       phoneNumber: req.body.phoneNumber,
       zipCode: req.body.zipCode,
     };
+
     const activationToken = createActivationToken(seller);
     const activationUrl = `http://localhost:5173/seller/activation/${activationToken}`;
 
@@ -49,9 +60,10 @@ router.post("/create-shop", upload.single("file"), async (req, res, next) => {
         subject: "Activate your Shop",
         message: `Hello ${seller.name}, please click on the link to activate your shop: ${activationUrl}`,
       });
+
       res.status(201).json({
         success: true,
-        message: `please check your email :- ${seller.email} to activate your shop`,
+        message: `Please check your email: ${seller.email} to activate your shop.`,
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));

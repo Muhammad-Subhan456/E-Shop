@@ -32,16 +32,16 @@ const shopSchema = new mongoose.Schema({
     type: String,
     default: "Seller",
   },
-  avatar: {
+  avatar:{
     public_id: {
       type: String,
-      required: true,
+      default: "default_avatar_id",
     },
     url: {
       type: String,
-      required: true,
-    },
-  },
+      default: "", 
+    }, 
+ },
   zipCode: {
     type: Number,
     required: true,

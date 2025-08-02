@@ -109,7 +109,7 @@ router.post(
 router.post(
   "/login-user",
   catchAsyncErrors(async (req, res, next) => {
-    try {
+     try {
       const { email, password } = req.body;
       if (!email || !password) {
         return next(new ErrorHandler("Please Provide all fields", 400));
