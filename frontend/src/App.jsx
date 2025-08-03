@@ -1,7 +1,7 @@
 import React from 'react'
-import {BrowserRouter,Routes,Route} from "react-router-dom"
+import {BrowserRouter,Routes,Route, useNavigate} from "react-router-dom"
 import {LoginPage,SignupPage,ActivationPage,HomePage,ProductsPage,BestSellingPage,EventsPage,FAQPage,ProductDetailsPage,
-  CheckoutPage,PaymentPage,OrderSuccessPage,ProfilePage,ShopCreatePage,SellerActivationPage,
+  CheckoutPage,PaymentPage,OrderSuccessPage,ProfilePage,ShopCreatePage,SellerActivationPage,ShopLoginPage,
 } from './Routes.js'
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,17 +10,24 @@ import './App.css'
 import axios from 'axios';
 import { server } from './server.js';
 import Store from './redux/store'
-import {loaduser} from './redux/actions/user'
+import {loadSeller, loaduser} from './redux/actions/user'
 import { useSelector } from 'react-redux';
 import ProtectedRoute from './ProtectedRoute';
+import {ShopHomePage} from "./ShopRoutes"
+import SellerProtectedRoute from './SellerProtectedRoute';
 
 export default function App() {
-
   const {loading, isAuthenticated} = useSelector((state)=>state.user) 
-
+  const {isLoading, isSeller,seller } = useSelector((state)=>state.seller) 
+ // const navigate = useNavigate();
 
   useEffect(() => {
     Store.dispatch(loaduser())
+    Store.dispatch(loadSeller())
+
+    if(isSeller){
+      navigate(`/shop/${seller._id}`)
+    }
   }, [])
   
 
@@ -50,7 +57,14 @@ export default function App() {
             <ProfilePage/>
           </ProtectedRoute>
         } />
+        {/* shop routes */}
         <Route path='/shop-create' element={ <ShopCreatePage/>} />
+        <Route path='/shop-login' element={ <ShopLoginPage/>} />
+        <Route path='/shop/:id' element={ 
+          <SellerProtectedRoute isSeller={isSeller} seller={seller}  >
+            <ShopHomePage/>
+          </SellerProtectedRoute>
+        } />
       </Routes>
       
       <ToastContainer
