@@ -31,7 +31,7 @@ import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { ShopHomePage } from "./ShopRoutes";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute";
-import {ShopDashboardPage} from "./routes/ShopRoutes"
+import {ShopDashboardPage,ShopCreateProduct} from "./routes/ShopRoutes"
 
 export default function App() {
   // const navigate = useNavigate();
@@ -98,6 +98,14 @@ export default function App() {
           element={
             <SellerProtectedRoute>
               <ShopDashboardPage/>
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-create-product"
+          element={
+            <SellerProtectedRoute>
+              <ShopCreateProduct/>
             </SellerProtectedRoute>
           }
         />
