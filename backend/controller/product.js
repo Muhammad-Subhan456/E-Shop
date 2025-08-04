@@ -18,7 +18,7 @@ router.post("/create-product",upload.array("images"), catchAsyncErrors(async(req
         }
         else{
             const files = req.files;
-            const imageUrls = files.map((file)=> `${file.fileName}`);
+            const imageUrls = files.map((file)=> `${file.filename}`);
             const productData = req.body;
             productData.images = imageUrls;
             productData.shop = shop;
@@ -37,5 +37,18 @@ router.post("/create-product",upload.array("images"), catchAsyncErrors(async(req
 
 }))
 
+// get all products of a shop
+router.get("/get-all-products-shop/:id", catchAsyncErrors(async(req,res,next)=>{
+    try {
+        const products = await Product.find({shopId: req.params.id})
+        res.status(201).json({
+            success: true,
+            products,
+        })
+    } catch (error) {
+        return next(new ErrorHandler(error,400));
+        
+    }
+})) 
 
 module.exports = router;
