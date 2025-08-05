@@ -63,7 +63,7 @@ router.delete("/delete-shop-product/:id",isSeller,catchAsyncErrors(async(req,res
     }
     res.status(201).json({
         success: true,
-        product,
+        message: "Product Deleted Successfully! " ,
     })
 
     } catch (error) {
