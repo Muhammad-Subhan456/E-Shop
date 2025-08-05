@@ -34,11 +34,11 @@ export const productReducer = createReducer(initialState, (builder) => {
       state.isLoading = true;
     })    
     .addCase("deleteProductSuccess", (state, action) => {
-      state.isLoading = true;
+      state.isLoading = false;
       state.message = action.payload;
     })    
     .addCase("deleteProductFail", (state, action) => {
-      state.isLoading = true;
+      state.isLoading = false;
       state.error = action.payload;
     })    
 

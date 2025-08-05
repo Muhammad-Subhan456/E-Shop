@@ -72,4 +72,22 @@ router.delete("/delete-shop-product/:id",isSeller,catchAsyncErrors(async(req,res
     }
 }))
 
+//logout shop
+router.get("/logout",isSeller, catchAsyncErrors(async (req,res,next)=>{
+  try {
+    res.cookie("seller_token",null,{
+      expires: new Date(Date.now()),  
+      httpOnly: true,
+    });
+    res.status(201).json({
+      success: true,
+      message: "Logged Out Successfully!"
+    });
+
+  } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    
+  }
+}))
+
 module.exports = router;
