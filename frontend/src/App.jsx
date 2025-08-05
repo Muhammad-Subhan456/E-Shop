@@ -17,7 +17,6 @@ import {
   ShopCreatePage,
   SellerActivationPage,
   ShopLoginPage,
-
 } from "./routes/Routes.js";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -31,7 +30,12 @@ import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { ShopHomePage } from "./ShopRoutes";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute";
-import {ShopDashboardPage,ShopCreateProduct,ShopAllProducts } from "./routes/ShopRoutes"
+import {
+  ShopDashboardPage,
+  ShopCreateProduct,
+  ShopAllProducts,
+  ShopCreateEvents,
+} from "./routes/ShopRoutes";
 
 export default function App() {
   // const navigate = useNavigate();
@@ -97,7 +101,7 @@ export default function App() {
           path="/dashboard"
           element={
             <SellerProtectedRoute>
-              <ShopDashboardPage/>
+              <ShopDashboardPage />
             </SellerProtectedRoute>
           }
         />
@@ -105,7 +109,7 @@ export default function App() {
           path="/dashboard-create-product"
           element={
             <SellerProtectedRoute>
-              <ShopCreateProduct/>
+              <ShopCreateProduct />
             </SellerProtectedRoute>
           }
         />
@@ -113,7 +117,15 @@ export default function App() {
           path="/dashboard-products"
           element={
             <SellerProtectedRoute>
-              <ShopAllProducts/>
+              <ShopAllProducts />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-create-event"
+          element={
+            <SellerProtectedRoute>
+              <ShopCreateEvents />
             </SellerProtectedRoute>
           }
         />
