@@ -6,7 +6,7 @@ const initialState = {
 
 export const productReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(productCreateRequest, (state) => {
+    .addCase("productCreateRequest", (state) => {
       state.isLoading = true;
     })
     .addCase("productCreateSuccess", (state, action) => {
