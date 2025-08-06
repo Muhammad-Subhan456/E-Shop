@@ -8,24 +8,46 @@ const { fs } = require("fs");
 const CoupounCode = require("../model/coupounCode");
 
 router.post(
-  "/create-coupoun-code",
+  "/create-coupon-code",
   isSeller,
   catchAsyncErrors(async (req, res, next) => {
-
     try {
-        const isCoupounCodeExists = await CoupounCode.find({name: req.body.name});
-        if(isCoupounCodeExists){
-        return next(new ErrorHandler("Coupoun Code Already Exists",400));
-    }
-    const coupounCode = await CoupounCode.create(req.body)
-    res.status(201).json({
+      const isCoupounCodeExists = await CoupounCode.find({
+        name: req.body.name,
+      });
+      if (isCoupounCodeExists) {
+        return next(new ErrorHandler("Coupoun Code Already Exists", 400));
+      }
+      const coupounCode = await CoupounCode.create(req.body);
+      res.status(201).json({
         success: true,
         coupounCode,
-    })
-        
+      });
     } catch (error) {
-        return next(new ErrorHandler(error,400));
-        
+      return next(new ErrorHandler(error, 400));
     }
   })
 );
+
+// get all coupons of a shop
+router.get(
+  "/get-coupon/:id",
+  isSeller,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const couponCodes = await CoupounCode.find({
+        shop: {
+          _id: req.params.id,
+        },
+      });
+      res.status(201).json({
+        success: true,
+        couponCodes,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
+module.exports = router;
