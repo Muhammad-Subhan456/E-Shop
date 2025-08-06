@@ -36,6 +36,7 @@ import {
   ShopAllProducts,
   ShopCreateEvents,
   ShopAllEvents,
+  ShopAllCoupouns,
 } from "./routes/ShopRoutes";
 
 export default function App() {
@@ -135,6 +136,14 @@ export default function App() {
           element={
             <SellerProtectedRoute>
               <ShopAllEvents />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-coupouns"
+          element={
+            <SellerProtectedRoute>
+              <ShopAllCoupouns />
             </SellerProtectedRoute>
           }
         />
