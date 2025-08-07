@@ -39,14 +39,16 @@ import {
   ShopAllCoupouns,
   ShopPreviewPage,
 } from "./routes/ShopRoutes";
-
+import { getAllProductsShop } from "./redux/actions/product";
+import {getAllEvents} from "./redux/actions/events"
 export default function App() {
   // const navigate = useNavigate();
 
   useEffect(() => {
     Store.dispatch(loaduser());
     Store.dispatch(loadSeller());
-
+    Store.dispatch(getAllProductsShop())
+    Store.dispatch(getAllEvents());
     // if(isSeller){
     //   navigate(`/shop/${seller._id}`)
     // }

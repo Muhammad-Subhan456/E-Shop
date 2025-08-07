@@ -5,8 +5,8 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ErrorHandler = require("../utils/ErrorHandler");
 const Event = require("../model/event");
 const Shop = require("../model/shop");
-const {isSeller} = require("../middleware/auth")
-const {fs} = require("fs")
+const { isSeller } = require("../middleware/auth");
+const { fs } = require("fs");
 
 router.post(
   "/create-event",
@@ -35,39 +35,58 @@ router.post(
   })
 );
 
-
-router.get("/get-all-events/:id", catchAsyncErrors(async(req,res,next)=>{
+router.get(
+  "/get-all-events/:id",
+  catchAsyncErrors(async (req, res, next) => {
     try {
-        const events = await Event.find({shopId: req.params.id})
-        res.status(201).json({
-            success: true,
-            events,
-        })
+      const events = await Event.find({ shopId: req.params.id });
+      res.status(201).json({
+        success: true,
+        events,
+      });
     } catch (error) {
-        return next(new ErrorHandler(error,400));
-        
+      return next(new ErrorHandler(error, 400));
     }
-})) 
+  })
+);
 
 // delete a event of a shop
 
-router.delete("/delete-shop-event/:id",isSeller,catchAsyncErrors(async(req,res,next)=>{
+router.delete(
+  "/delete-shop-event/:id",
+  isSeller,
+  catchAsyncErrors(async (req, res, next) => {
     try {
-        const productId = req.params.id;
-        const event = await Event.findByIdAndDelete(productId);
-        if(!event){
-        return next(new ErrorHandler("event not found with this ID",500));
-    }
-    res.status(201).json({
+      const productId = req.params.id;
+      const event = await Event.findByIdAndDelete(productId);
+      if (!event) {
+        return next(new ErrorHandler("event not found with this ID", 500));
+      }
+      res.status(201).json({
         success: true,
-        message: "event Deleted Successfully! " ,
-    })
-
+        message: "event Deleted Successfully! ",
+      });
     } catch (error) {
-        return next(new ErrorHandler(error,400));
-        
+      return next(new ErrorHandler(error, 400));
     }
-}))
+  })
+);
 
+// get all events
+router.get(
+  "/get-all-events",
+  catchAsyncErrors(async (req, res, next) => {
+      try {
+        const events = Event.find();
+        res.status(201).json({
+          success: true,
+          events,
+        })
+      } catch (error) {
+      return next(new ErrorHandler(error, 400));
+        
+      }
+  })
+);
 
-module.exports = router; 
+module.exports = router;

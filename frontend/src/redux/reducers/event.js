@@ -60,6 +60,7 @@ export const eventReducer = createReducer(initialState, (builder) => {
       state.error = action.payload;
     })
 
+
     // Clear errors
     .addCase("clearErrors", (state) => {
       state.error = null;
