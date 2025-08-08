@@ -12,7 +12,6 @@ const user = require("../model/user");
 const sendToken = require("../utils/jwtToken");
 const { isAuthenticated } = require("../middleware/auth");
 
-
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
   const { name, email, password } = req.body;
   const userEmail = await User.findOne({ email });
@@ -109,7 +108,7 @@ router.post(
 router.post(
   "/login-user",
   catchAsyncErrors(async (req, res, next) => {
-     try {
+    try {
       const { email, password } = req.body;
       if (!email || !password) {
         return next(new ErrorHandler("Please Provide all fields", 400));
@@ -140,7 +139,6 @@ router.get(
         return next(new ErrorHandler("User Doesnt Exist", 400));
       }
       res.status(200).json({
-        
         success: true,
         user,
       });
@@ -151,21 +149,53 @@ router.get(
 );
 
 //logout user
-router.get("/logout",isAuthenticated, catchAsyncErrors(async (req,res,next)=>{
-  try {
-    res.cookie("token",null,{
-      expires: new Date(Date.now()),  
-      httpOnly: true,
-    });
-    res.status(201).json({
-      success: true,
-      message: "Logged Out Successfully!"
-    });
-
-  } catch (error) {
+router.get(
+  "/logout",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      res.cookie("token", null, {
+        expires: new Date(Date.now()),
+        httpOnly: true,
+      });
+      res.status(201).json({
+        success: true,
+        message: "Logged Out Successfully!",
+      });
+    } catch (error) {
       return next(new ErrorHandler(error.message, 500));
-    
-  }
-}))
+    }
+  })
+);
+
+// update user profile
+router.put(
+  "/update-user-info",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { email, password, phoneNumber, name } = req.body;
+      const user = await User.findOne({ email }).select("+password");
+      if (!user) {
+        return next(new ErrorHandler("User Doesnt Exist", 400));
+      }
+      const isPasswordValid = await user.comparePassword(password);
+      if (!isPasswordValid) {
+        return next(new ErrorHandler("Invalid Credentials", 400));
+      }
+      user.name = name;
+      user.email = email;
+      user.phoneNumber = phoneNumber;
+
+      await user.save();
+      res.status(201).json({
+        success: true,
+        user,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
 
 module.exports = router;
