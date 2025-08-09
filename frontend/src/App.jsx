@@ -40,15 +40,26 @@ import {
   ShopPreviewPage,
 } from "./routes/ShopRoutes";
 import { getAllProductsShop } from "./redux/actions/product";
-import {getAllEvents} from "./redux/actions/events"
+import { getAllEvents } from "./redux/actions/events";
+import { useState } from "react";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
 export default function App() {
   // const navigate = useNavigate();
+  const [stripeApiKey, setStripeApiKey] = useState("");
+
+  async function getStripeApikey() {
+    const { data } = await axios.get(`${server}/payment/stripeapikey`);
+    setStripeApiKey(data.stripeApiKey);
+  }
 
   useEffect(() => {
     Store.dispatch(loaduser());
     Store.dispatch(loadSeller());
-    Store.dispatch(getAllProductsShop())
+    Store.dispatch(getAllProductsShop());
     Store.dispatch(getAllEvents());
+    getStripeApikey();
     // if(isSeller){
     //   navigate(`/shop/${seller._id}`)
     // }
@@ -56,6 +67,21 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      {stripeApiKey && (
+        <Elements stripe={loadStripe(stripeApiKey)}>
+          <Routes>
+            <Route
+              path="/payment"
+              element={
+                <ProtectedRoute>
+                  <PaymentPage />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </Elements>
+      )}
+
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -81,7 +107,6 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/payment" element={<PaymentPage />} />
         <Route path="/order/success/:id" element={<OrderSuccessPage />} />
         <Route
           path="/profile"
@@ -154,7 +179,7 @@ export default function App() {
           path="/dashboard-coupouns"
           element={
             <SellerProtectedRoute>
-              <ShopPreviewPage/>
+              <ShopPreviewPage />
             </SellerProtectedRoute>
           }
         />

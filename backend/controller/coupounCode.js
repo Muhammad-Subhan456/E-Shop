@@ -6,6 +6,7 @@ const Shop = require("../model/shop");
 const { isSeller } = require("../middleware/auth");
 const { fs } = require("fs");
 const CoupounCode = require("../model/coupounCode");
+const coupounCode = require("../model/coupounCode");
 
 router.post(
   "/create-coupon-code",
@@ -49,5 +50,19 @@ router.get(
     }
   })
 );
+
+// coupon code by its value
+router.get("/get-coupon-value/:name",catchAsyncErrors(async(req,res,next)=>{
+   try {
+    const couponcode = await CoupounCode.findOne({name: req.params.name});
+    res.status(200).json({
+      success: true,
+      couponcode,
+    })
+   } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    
+   }
+}))
 
 module.exports = router;
