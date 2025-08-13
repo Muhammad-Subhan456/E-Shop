@@ -31,7 +31,8 @@ import { loadSeller, loaduser } from "./redux/actions/user";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { ShopHomePage } from "./ShopRoutes";
-import SellerProtectedRoute from "./routes/SellerProtectedRoute";
+import SellerProtectedRoute from "./routes/SellerProtectedRoute" 
+
 import {
   ShopDashboardPage,
   ShopCreateProduct,
@@ -44,6 +45,8 @@ import {
   ShopOrderDetails,
   ShopAllRefunds,
   ShopSettingsPage,
+  ShopWithDrawMoneyPage,
+  ShopInboxPage,
 } from "./routes/ShopRoutes";
 import { getAllProductsShop } from "./redux/actions/product";
 import { getAllEvents } from "./redux/actions/events";
@@ -174,6 +177,14 @@ export default function App() {
           }
         />
         <Route
+          path="/dashboard-messages"
+          element={
+            <SellerProtectedRoute>
+              <ShopInboxPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
           path="/dashboard-products"
           element={
             <SellerProtectedRoute>
@@ -218,6 +229,14 @@ export default function App() {
           element={
             <SellerProtectedRoute>
               <ShopAllCoupouns />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-withdraw-money"
+          element={
+            <SellerProtectedRoute>
+              <ShopWithDrawMoneyPage />
             </SellerProtectedRoute>
           }
         />
