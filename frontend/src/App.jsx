@@ -32,7 +32,7 @@ import { loadSeller, loaduser } from "./redux/actions/user";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { ShopHomePage } from "./ShopRoutes";
-import SellerProtectedRoute from "./routes/SellerProtectedRoute" 
+import SellerProtectedRoute from "./routes/SellerProtectedRoute";
 
 import {
   ShopDashboardPage,
@@ -49,11 +49,21 @@ import {
   ShopWithDrawMoneyPage,
   ShopInboxPage,
 } from "./routes/ShopRoutes";
+
+import {
+  AdminDashboardPage,
+  AdminDashboardUsers,
+  AdminDashboardSellers,
+  AdminDashboardProducts,
+  AdminDashboardEvents,
+  AdminDashboardWithdraw,
+} from "./routes/AdminRoutes";
 import { getAllProductsShop } from "./redux/actions/product";
 import { getAllEvents } from "./redux/actions/events";
 import { useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import ProtectedAdminRoute from "./routes/ProtectedAdminRoute.js";
 
 export default function App() {
   // const navigate = useNavigate();
@@ -165,7 +175,7 @@ export default function App() {
           path="/dashboard-refunds"
           element={
             <SellerProtectedRoute>
-              <ShopAllRefunds/>
+              <ShopAllRefunds />
             </SellerProtectedRoute>
           }
         />
@@ -173,7 +183,7 @@ export default function App() {
           path="/settings"
           element={
             <SellerProtectedRoute>
-              <ShopSettingsPage/>
+              <ShopSettingsPage />
             </SellerProtectedRoute>
           }
         />
@@ -213,7 +223,7 @@ export default function App() {
           path="/order/:id"
           element={
             <SellerProtectedRoute>
-              <ShopOrderDetails/>
+              <ShopOrderDetails />
             </SellerProtectedRoute>
           }
         />
@@ -263,6 +273,55 @@ export default function App() {
             <SellerProtectedRoute>
               <TrackOrderPage />
             </SellerProtectedRoute>
+          }
+        />
+        {/*Admin Routes*/}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedAdminRoute>
+              <AdminDashboardPage />
+            </ProtectedAdminRoute>
+          }
+        />
+        <Route
+          path="/admin-users"
+          element={
+            <ProtectedAdminRoute>
+              <AdminDashboardUsers />
+            </ProtectedAdminRoute>
+          }
+        />
+        <Route
+          path="/admin-sellers"
+          element={
+            <ProtectedAdminRoute>
+              <AdminDashboardSellers />
+            </ProtectedAdminRoute>
+          }
+        />
+        <Route
+          path="/admin-products"
+          element={
+            <ProtectedAdminRoute>
+              <AdminDashboardProducts />
+            </ProtectedAdminRoute>
+          }
+        />
+        <Route
+          path="/admin-events"
+          element={
+            <ProtectedAdminRoute>
+              <AdminDashboardEvents />
+            </ProtectedAdminRoute>
+          }
+        />
+        <Route
+          path="/admin-withdraw-request"
+          element={
+            <ProtectedAdminRoute>
+              <AdminDashboardWithdraw />
+            </ProtectedAdminRoute>
           }
         />
       </Routes>

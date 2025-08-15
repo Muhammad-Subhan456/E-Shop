@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { categoriesData } from "../../static/data";
 import { toast } from "react-toastify";
-//import { createevent } from "../../redux/actions/event";
+import { createevent } from "../../redux/actions/events";
 
 const CreateEvent = () => {
   const { seller } = useSelector((state) => state.seller);

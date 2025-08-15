@@ -17,6 +17,7 @@ const store = configureStore({
         cart: cartReducer,
         wishlist: wishlistReducer,
         order: orderReducer,
+        
     }
 })
 

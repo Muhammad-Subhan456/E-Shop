@@ -11,21 +11,20 @@ import React from "react";
 const ProductsPage = () => {
   const [searchParams] = useSearchParams();
   const categoryData = searchParams.get("category");
- // const {allProducts,isLoading} = useSelector((state) => state.products);
+  const {allProducts,isLoading} = useSelector((state) => state.products);
   const [data, setData] = useState([]);
-  const isLoading = false; // done by me delete it when apply redux
 
-//   useEffect(() => {
-//     if (categoryData === null) {
-//       const d = allProducts;
-//       setData(d);
-//     } else {
-//       const d =
-//       allProducts && allProducts.filter((i) => i.category === categoryData);
-//       setData(d);
-//     }
-//     //    window.scrollTo(0,0);
-//   }, [allProducts]);
+  useEffect(() => {
+    if (categoryData === null) {
+      const d = allProducts;
+      setData(d);
+    } else {
+      const d =
+      allProducts && allProducts.filter((i) => i.category === categoryData);
+      setData(d);
+    }
+    //    window.scrollTo(0,0);
+  }, [allProducts]);
 
   return (
   <>

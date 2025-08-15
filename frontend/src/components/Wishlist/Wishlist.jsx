@@ -4,8 +4,8 @@ import { BsCartPlus } from "react-icons/bs";
 import styles from "../../styles/styles";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-//import { removeFromWishlist } from "../../redux/actions/wishlist";
-//import { addTocart } from "../../redux/actions/cart";
+import { removeFromWishlist } from "../../redux/actions/wishlist";
+import { addTocart } from "../../redux/actions/cart";
 
 const Wishlist = ({ setOpenWishlist }) => {
   const { wishlist } = useSelector((state) => state.wishlist);

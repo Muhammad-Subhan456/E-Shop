@@ -13,17 +13,17 @@ import { Button } from '@mui/material';
 import { Link } from "react-router-dom";
 import { MdTrackChanges } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
-// import {
-//   deleteUserAddress,
-//   loadUser,
-//   updatUserAddress,
-//   updateUserInformation,
-// } from "../../redux/actions/user";
+import {
+  deleteUserAddress,
+  loaduser,
+  updatUserAddress,
+  updateUserInformation,
+} from "../../redux/actions/user";
 import { Country, State } from "country-state-city";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-//import { getAllOrdersOfUser } from "../../redux/actions/order";
+import { getAllOrdersOfUser } from "../../redux/actions/order";
 
 const ProfileContent = ({ active }) => {
   const { user, error, successMessage } = useSelector((state) => state.user);
@@ -65,7 +65,7 @@ const ProfileContent = ({ active }) => {
             }
           )
           .then((response) => {
-            dispatch(loadUser());
+            dispatch(loaduser());
             toast.success("avatar updated successfully!");
           })
           .catch((error) => {
